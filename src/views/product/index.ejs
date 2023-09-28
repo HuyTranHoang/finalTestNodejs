@@ -1,0 +1,91 @@
+<% if (messages.successMessage) { %>
+    <div class="position-relative" id="successMessage">
+        <div class="alert alert-success position-absolute top-50 start-50 translate-middle" role="alert">
+            <i class="fa-solid fa-check fa-bounce me-3"></i> <%= messages.successMessage %>
+        </div>
+    </div>
+<% } %>
+
+<section class="mt-3">
+    <h1>Product list</h1>
+    <a href="/admin/product/create" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> Add new product</a>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (const product of products) { %>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><%= product.name %></td>
+                    <td><%= product.price %></td>
+                    <td><%= product.description %></td>
+                    <td><img src="/public/images/<%= product.imageUrl %>" alt="" style="width: 150px"></td>
+                    <td>
+                        <a href="/admin/product/<%= product._id %>/edit" class="btn btn-secondary me-2">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </a>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                            data-bs-id="<%= product._id %>">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</section>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete this product
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="" method="POST" id="formDelete"></form>
+
+<script>
+    const deleteModal = document.getElementById('deleteModal')
+    const formDelete = document.getElementById('formDelete')
+    const confirmDelete = document.getElementById('confirmDelete')
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget
+        const id = button.getAttribute('data-bs-id')
+        formDelete.action = `/admin/product/${id}?_method=DELETE`
+        confirmDelete.addEventListener('click', () => {
+            formDelete.submit()
+        })
+    })
+}
+</script>
+
+<% if (messages.successMessage) { %>
+    <script>
+        const successMessage = document.getElementById('successMessage')
+        setTimeout(() => {
+            successMessage.style.display = 'none'
+        }, 2000);
+    </script>
+<% } %>
