@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Expressjs</a>
+        <a class="navbar-brand" href="/"><i class="fa-solid fa-fish"></i> <b>Cuti</b>Shark</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,10 +8,12 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link <%= path === '/' ? 'active' : '' %>" aria-current="page" href="/">Home</a>
+                    <a class="nav-link <%= path === '/' ? 'active' : '' %>" aria-current="page" href="/">
+                        <i class="fa-solid fa-house"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+                    <a class="nav-link <%= path === '/cart' ? 'active' : '' %>" href="/cart">
+                        <i class="fa-solid fa-cart-shopping"></i> Cart</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -20,9 +22,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item <%= path.includes('/admin/user') ? 'active' : '' %>"
-                                href="/admin/user">User</a></li>
+                                href="/admin/user"><i class="fa-solid fa-users me-2"></i> User</a></li>
                         <li><a class="dropdown-item <%= path.includes('/admin/product') ? 'active' : '' %>"
-                                href="/admin/product">Product</a></li>
+                                href="/admin/product"><i class="fa-solid fa-gift me-2"></i> Product</a></li>
                     </ul>
                 </li>
             </ul>

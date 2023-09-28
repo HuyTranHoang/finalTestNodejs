@@ -21,7 +21,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Description</th>
                 <th scope="col">Image</th>
-                <th scope="col">Actions</th>
+                <th class="text-center" scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                         <td><%= product.price %></td>
                         <td><%= product.description %></td>
                         <td><img src="/public/images/<%= product.imageUrl %>" alt="" style="width: 150px"></td>
-                        <td>
+                        <td class="text-center" style="width: 200px">
                             <a href="/admin/product/<%= product._id %>/edit" class="btn btn-secondary me-2">
                                 <i class="fa-solid fa-pen"></i> Edit
                             </a>
