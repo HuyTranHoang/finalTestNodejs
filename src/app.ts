@@ -6,6 +6,7 @@ import expressLayouts from 'express-ejs-layouts'
 import initRoute from './routes'
 import connectToDatabase from './utils/mongoDb'
 import methodOverride from 'method-override'
+import User from './models/user'
 
 const app: Express = express()
 const port: number = 3000
@@ -35,6 +36,18 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
     res.locals.path = req.url
     next()
 })
+
+
+app.use((req: Request, res: Response, next: NextFunction): void => {
+    User.findById('651598646b65b107b72ba1c6')
+        .then((result) => {
+            const { _id, username, email, gender, cart } = result as User
+            req.user = new User(_id, username, email, gender, cart)
+            next()
+        })
+        .catch((err) => console.log('error', err))
+})
+
 
 // Init routes
 initRoute(app)

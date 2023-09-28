@@ -23,7 +23,7 @@ class UserController {
     // [POST] - /admin/user
     static store = async (req: Request, res: Response) => {
         const { username, email, gender } = req.body
-        const user = new User(username, email, gender)
+        const user = new User(username, email, gender, {items: []})
         await User.add(user)
 
         req.flash('successMessage', 'User add successfully!')
@@ -44,8 +44,10 @@ class UserController {
     static update = async (req: Request, res: Response) => {
         const id = req.params.id
         const { username, email, gender } = req.body
-        const user = new User(username, email, gender)
-        await User.update(id, user)
+        const updateUser = {username, email, gender}
+        let user = await User.findById(id) as User
+        user = {...user, ...updateUser}
+        await User.update(user)
 
         req.flash('successMessage', 'Update user successfully!')
 

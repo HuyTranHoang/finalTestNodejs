@@ -1,0 +1,74 @@
+<div class="row justify-content-center mt-3">
+    <div class="col bg-dark-subtle p-3 rounded d-flex flex-column">
+        <h1>My cart</h1>
+        <p>List all my products in cart</p>
+        <hr>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Image</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% if (cartItems.length > 0) { %>
+                    <% cartItems.forEach((item, index)=> { %>
+                        <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td><%= item.name %></td>
+                            <td><%= item.price %>$</td>
+                            <td><img src="/public/images/<%= item.imageUrl %>" class="card-img-top" alt="..."
+                                    style="width: 100px;"></td>
+                            <td>
+                                <button class="btn btn-secondary btn-minus-cart rounded-5 me-2"><i
+                                    class="fa-solid fa-minus"></i></button>
+                                <span><%= item.quantity %></span>
+                                <button class="btn btn-secondary btn-plus-cart rounded-5 ms-2"><i
+                                    class="fa-solid fa-plus"></i></button>
+                            </td>
+                            <td>
+                                <%= item.price * item.quantity %>$
+                                <% totalMoney += item.price * item.quantity %>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-remove-from-cart" data-id="<%= item._id %>">Remove</button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7" class="text-center">No product found in cart</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-end align-items-center">
+            <h3>Total money: <%= totalMoney %>$</h3>
+            <button class="btn btn-primary ms-5">Check out</button>
+        </div>
+    </div>
+</div>
+
+<form action="" method="POST" id="removeFormCart"></form>
+
+<script>
+    window.onload = (event) => {
+        const buttons = document.getElementsByClassName('btn-remove-from-cart')
+        const form = document.getElementById('removeFormCart')
+
+        for (const button of buttons) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault()
+                form.action = `/cart/${this.dataset.id}?_method=DELETE`
+                form.submit()
+            })
+        }
+    }
+</script>

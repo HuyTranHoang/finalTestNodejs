@@ -2,7 +2,7 @@
     <h3>New product</h3>
     <hr>
     <div class="row row-cols-2 row-cols-md-4 g-4">
-        <% if (products.length > 0) { %>
+        <% if (products.length> 0) { %>
             <% for (const product of products) { %>
                 <div class="col">
                     <a href="/product/<%= product._id %>" class="text-decoration-none">
@@ -16,7 +16,9 @@
                                     <%= product.description %>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <button class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i> Add to cart</button>
+                                    <button class="btn btn-primary btn-add-to-cart" data-id="<%= product._id %>">
+                                        <i class="fa-solid fa-cart-plus"></i> Add to cart
+                                    </button>
                                     <span class="align-middle text-success fs-5">
                                         <%= parseInt(product.price).toLocaleString() %>$
                                     </span>
@@ -25,8 +27,25 @@
                         </div>
                     </a>
                 </div>
-            <% } %>
-        <% } else { %>
-            <h4 class="text-secondary-emphasis">No products found</h4>
-        <% } %>
+                <% } %>
+                    <% } else { %>
+                        <h4 class="text-secondary-emphasis">No products found</h4>
+                        <% } %>
 </section>
+
+<form action="" method="POST" id="addToCartForm"></form>
+
+<script>
+    window.onload = (event) => {
+        const buttons = document.getElementsByClassName('btn-add-to-cart')
+        const form = document.getElementById('addToCartForm')
+
+        for (const button of buttons) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault()
+                form.action = `/cart/${this.dataset.id}`
+                form.submit()
+            })
+        }
+    }
+</script>
