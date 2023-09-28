@@ -17,7 +17,7 @@ class ProductController {
 
     // [GET] - /admin/product/create
     static create = (req: Request, res: Response) => {
-        const title = 'Admin - Product add'
+        const title = 'Admin - Product Add'
         res.render('product/add', { title })
     }
 
@@ -40,7 +40,6 @@ class ProductController {
         const id = req.params.id
         const product = await Product.findById(id)
 
-        console.log(product)
         res.render('product/edit', { product, title })
     }
 

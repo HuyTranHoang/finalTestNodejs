@@ -1,0 +1,72 @@
+<div class="row justify-content-center m-3">
+    <div class="col-4 p-3 bg-dark-subtle rounded">
+        <h1>Edit</h1>
+        <p>Update user</p>
+        <hr>
+
+        <form action="/admin/user/<%= user._id %>?_method=PUT" method="POST" id="addUserForm">
+            <div class="mb-3">
+                <label class="form-label text-dark" for="username">Username</label>
+                <input class="form-control" type="text" id="username" name="username" value="<%= user.username %>" />
+                <span class="text-danger label-error invisible" id="usernameError">Error</span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-dark" for="email">Email</label>
+                <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>" />
+                <span class="text-danger label-error invisible" id="emailError">Error</span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-dark" for="gender">Gender</label>
+                <select class="form-control" name="gender" id="gender">
+                    <option <%= user.gender === 'male' ? 'selected' : '' %> value="male">Male</option>
+                    <option <%= user.gender === 'female' ? 'selected' : '' %> value="female">Female</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary float-end w-25 mt-3" type="submit">Update</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const usernameInput = document.getElementById('username')
+    const usernameError = document.getElementById('usernameError')
+
+    const emailInput = document.getElementById('email')
+    const emailError = document.getElementById('emailError')
+
+    const form = document.getElementById('addUserForm')
+
+    form.addEventListener('submit', (e) => {
+        usernameError.classList.add('invisible')
+        emailError.classList.add('invisible')
+
+        let flag = 0
+
+        const isEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+        const username = usernameInput.value
+        const email = emailInput.value
+
+        if (username.length === 0 || username === undefined) {
+            usernameError.innerText = `Username can't be empty`
+            usernameError.classList.remove('invisible')
+            flag++
+        }
+
+        if (email.length === 0 || email === undefined) {
+            emailError.innerText = `Email can't be empty`
+            emailError.classList.remove('invisible')
+            flag++
+        } else if (!email.toLowerCase().match(isEmailRegex)) {
+            emailError.innerText = `Incorrect email format`
+            emailError.classList.remove('invisible')
+            flag++
+        }
+
+        if (flag > 0)
+            e.preventDefault()
+    })
+</script>

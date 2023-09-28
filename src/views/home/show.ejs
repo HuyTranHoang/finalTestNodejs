@@ -6,25 +6,40 @@
             <div class="col-md-4">
                 <img src="/public/images/<%= product.imageUrl %>" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 d-flex flex-column">
                 <div class="card-body">
                     <h1 class="card-title"><%= product.name %></h1>
-                    <h3>Price: <small class="text-success "><%= product.price %>$</small></h3>
+                    <h3>Price: <small class="text-success "><%= parseInt(product.price).toLocaleString() %>$</small></h3>
                     <p class="card-text">Description: <%= product.description %></p>
                     <div class="d-flex align-items-center">
-                        <label for="quantity">Quantity</label>
-                        <button class="btn btn-outline-secondary ms-3"><i class="fa-solid fa-plus"></i></button>
+                        <label for="quantity">Quantity:</label>
+                        <button class="btn btn-outline-secondary ms-3" id="btnMinus"><i class="fa-solid fa-minus"></i></button>
                         <input class="form-control w-25 mx-3" type="number" id="quantity" value="1" disabled>
-                        <button class="btn btn-outline-secondary"><i class="fa-solid fa-minus"></i></button>
+                        <button class="btn btn-outline-secondary" id="btnPlus"><i class="fa-solid fa-plus"></i></button>
                     </div>
                     <div class="mt-5">
                         <button class="btn btn-primary"><i class="fa-solid fa-cart-plus me-2"></i> 
                             Add to cart</button>
-                        <a href="/" class="btn btn-danger">Back to homepage</a>
                     </div>
                 </div>
 
+                <a href="/" class="ms-3 mb-3">Back to homepage</a>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    const quantityInput = document.getElementById('quantity')
+    const btnPlus = document.getElementById('btnPlus')
+    const btnMinus = document.getElementById('btnMinus')
+
+    btnPlus.addEventListener('click', () => {
+        quantityInput.value = +quantityInput.value + 1
+    })
+
+    btnMinus.addEventListener('click', () => {
+        if(quantityInput.value > 1)
+            quantityInput.value = +quantityInput.value - 1
+    })
+</script>
