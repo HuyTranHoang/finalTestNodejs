@@ -30,3 +30,51 @@
         </form>
     </div>
 </div>
+
+<script>
+
+    const nameInput = document.getElementById('name')
+    const nameError = document.getElementById('nameError')
+
+    const priceInput = document.getElementById('price')
+    const priceError = document.getElementById('priceError')
+
+    const descriptionInput = document.getElementById('description')
+    const descriptionError = document.getElementById('descriptionError')
+
+    const form = document.getElementById('addProductForm')
+
+    form.addEventListener('submit', (e) => {
+        nameError.classList.add('invisible')
+        priceError.classList.add('invisible')
+        descriptionError.classList.add('invisible')
+
+        let flag = 0
+
+        const name = nameInput.value
+        const price = priceInput.value
+        const description = descriptionInput.value
+
+        if (name.length === 0 || name === undefined) {
+            nameError.innerText = `Title can't be empty`
+            nameError.classList.remove('invisible')
+            flag++
+        }
+
+        if (price.length === 0 || price === undefined) {
+            priceError.innerText = `Price can't be empty`
+            priceError.classList.remove('invisible')
+            flag++
+        }
+
+        if (description.length === 0 || description === undefined) {
+            descriptionError.innerText = `Description can't be empty`
+            descriptionError.classList.remove('invisible')
+            flag++
+        }
+
+        if(flag > 0)
+            e.preventDefault()
+    })
+
+</script>

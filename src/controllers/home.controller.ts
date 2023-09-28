@@ -7,9 +7,21 @@ class HomeController {
         try {
             const products = await Product.getAll()
             const title = 'Home'
-            res.render('index', { products, title })
+            res.render('home/index', { products, title })
         } catch (error) {
             console.log('>>> HomeController Index', error)
+        }
+    }
+
+    // [GET] - /product/:id
+    static show = async (req: Request, res: Response) => {
+        try {
+            const id = req.params.id
+            const product = await Product.findById(id)
+            const title = 'Home - Product details'
+            res.render('home/show', { product, title })
+        } catch (error) {
+            console.log('>>> HomeController show', error)
         }
     }
 }
