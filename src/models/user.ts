@@ -8,7 +8,7 @@ type ProductWithId = Product & {
 
 class User {
     constructor(
-        public _id: ObjectId,
+        public _id: ObjectId | undefined,
         public username: string,
         public email: string,
         public gender: string,
@@ -97,11 +97,31 @@ class User {
 
     getCart = async () => {
         const cartItems = []
+        const updatedCartItems = []
+        let flag = 0
 
         for (const item of this.cart.items) {
             const product = await Product.findById(item.productId.toString())
-            const quantity = item.quantity
-            cartItems.push({ ...product, quantity })
+            if (product) {
+                const quantity = item.quantity
+                cartItems.push({ ...product, quantity })
+                updatedCartItems.push({
+                    productId: new ObjectId(product._id),
+                    quantity
+                })
+            } else {
+                flag ++
+            }
+        }
+        
+        if (flag > 0) {
+            const users: Collection | undefined = collections.users
+            const filter = { _id: new ObjectId(this._id) }
+            this.cart.items = updatedCartItems
+            const updatedCart = {
+                items: updatedCartItems
+            }
+            await users?.updateOne(filter, { $set: { cart: updatedCart } })
         }
 
         return cartItems

@@ -23,7 +23,7 @@ class UserController {
     // [POST] - /admin/user
     static store = async (req: Request, res: Response) => {
         const { username, email, gender } = req.body
-        const user = new User(username, email, gender, {items: []})
+        const user = new User(undefined, username, email, gender, {items: []})
         await User.add(user)
 
         req.flash('successMessage', 'User add successfully!')

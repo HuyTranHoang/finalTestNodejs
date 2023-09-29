@@ -20,7 +20,7 @@ class CartController {
         try {
             const productId = req.params.productId
             const product = await Product.findById(productId)
-            req.user.addToCart(product)
+            await req.user.addToCart(product)
             res.redirect('/cart')
 
         } catch (error) {
